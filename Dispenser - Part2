@@ -1,0 +1,60 @@
+const int buzzerPin = 11; // Pin connected to the passive buzzer
+const int buttonPin = 2; // Pin connected to the push button
+
+// Defining the pins for the ultrasonic sensor
+const int trigPin = 9;
+const int echoPin = 10;
+const int motorPin = 6;
+// Define a threshold distance in centimeters
+const int detectionThreshold = 7; 
+
+void setup() 
+{
+  // put your setup code here, to run once:
+  // Set the trigger pin as an output
+  pinMode(trigPin, OUTPUT);
+  // Set the echo pin as an input
+  pinMode(echoPin, INPUT);
+  // Set the LED pin as an output
+  pinMode(motorPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  // Clear the trigPin by setting it LOW for 2 microseconds
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  // Set the trigPin HIGH for 10 microseconds to send a pulse
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  // Measure the duration of the echo pulse
+  long duration = pulseIn(echoPin, HIGH);
+
+  // Calculate the distance in centimeters
+  // Speed of sound is approximately 0.0343 cm/microsecond
+  // Divide by 2 because the sound travels to the object and back
+  float distanceCm = duration * 0.0343 / 2;
+
+  // Print the distance to the Serial Monitor
+  Serial.print("Distance: ");
+  Serial.print(distanceCm);
+  Serial.println(" cm");
+
+  // Check if an object is detected within the threshold
+  if (distanceCm > detectionThreshold) {
+    // Execute the command: turn on the LED
+    digitalWrite(motorPin, HIGH);
+    Serial.println("No object detected! Motor ON.");
+  } else {
+    // Execute the command: turn off the LED
+    digitalWrite(motorPin, LOW);
+    Serial.println("Object detected. Motor OFF.");
+  }
+
+  // Add a small delay to avoid continuous readings
+  delay(100); 
+}
