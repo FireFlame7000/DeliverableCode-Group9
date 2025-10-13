@@ -1,1 +1,1 @@
-// I tried integrating part 2 into part one, but it would not function properly. So I made the two parts that were functional seperate.
+// I tried integrating the code in Part2 into the code I have in Part1, but it would not function properly(More specifically, the code would not initiate the dispense function. It would only run up to the audio stopping after the button was pressed). So I made a Part2 to show what the code should've run after the button was pressed.
